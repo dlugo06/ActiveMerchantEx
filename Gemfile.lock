@@ -39,6 +39,8 @@ GEM
     arel (6.0.3)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    braintree (2.56.0)
+      builder (>= 2.0.0)
     builder (3.2.2)
     byebug (8.2.1)
     coffee-rails (4.1.0)
@@ -52,6 +54,10 @@ GEM
     debug_inspector (0.0.2)
     domain_name (0.5.25)
       unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.0.2)
+    dotenv-rails (2.0.2)
+      dotenv (= 2.0.2)
+      railties (~> 4.0)
     erubis (2.7.0)
     execjs (2.6.0)
     globalid (0.3.6)
@@ -156,8 +162,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  braintree
   byebug
   coffee-rails (~> 4.1.0)
+  dotenv-rails
   jbuilder (~> 2.0)
   jquery-rails
   rails (= 4.2.5)
