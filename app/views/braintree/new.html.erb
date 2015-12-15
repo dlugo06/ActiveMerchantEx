@@ -1,4 +1,9 @@
-<form id="checkout" method="post" action="/checkout">
+<!-- <form id="checkout" method="post" action="/checkout">
   <div id="payment-form"></div>
   <input type="submit" value="Pay $10">
-</form>
+</form> -->
+
+<%= form_tag("/braintree", method: "post") do %>
+  <div id="dropin"></div>
+  <%= submit_tag "Pay $10"  %>
+<% end %>
