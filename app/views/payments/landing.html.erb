@@ -1,0 +1,8 @@
+
+<% content_for(:body_attributes) do %>
+    data-no-turbolink="true"
+  <% end %>
+
+  <%= link_to 'Stripe Payment', new_stripe_charge_path %>
+  <br>
+  <%= link_to 'Braintree Payment', new_braintree_path %>
