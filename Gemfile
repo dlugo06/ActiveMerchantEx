@@ -25,7 +25,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'stripe' #Added DL
 gem 'braintree' #Added DL
-
+gem 'gon' #Added DL
+gem 'better_errors' #Added DL
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
