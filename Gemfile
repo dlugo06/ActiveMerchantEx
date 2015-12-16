@@ -25,7 +25,8 @@ gem 'stripe' #Added DL
 gem 'braintree' #Added DL
 gem 'gon' #Added DL
 gem 'better_errors' #Added DL
-gem 'postgresql'
+gem 'postgresql' #Added DL
+gem 'activemerchant' #Added DL
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
