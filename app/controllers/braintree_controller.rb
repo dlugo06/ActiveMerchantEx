@@ -16,15 +16,17 @@ class BraintreeController < ApplicationController
     end
   end
 
-  def paypal
-
+  def active_merchant
     ActiveMerchant::Billing::Base.mode = :test
 
-    gateway = ActiveMerchant::Billing::PaypalGateway.new(
-      :login => ENV["PAYPAL_LOGIN"],
-      :password => ENV["PAYPAL_PASSWORD"],
-      :signature => ENV["PAYPAL_SIGNATURE"]
-    )
+    #Paypal Gateway
+    # gateway = ActiveMerchant::Billing::PaypalGateway.new(
+    #   :login => ENV["PAYPAL_LOGIN"],
+    #   :password => ENV["PAYPAL_PASSWORD"],
+    #   :signature => ENV["PAYPAL_SIGNATURE"]
+    # )
+
+    gateway = ActiveMerchant::Billing::TrustCommerceGateway.new(:login => 'TestMerchant', :password => 'password')
 
     credit_card = ActiveMerchant::Billing::CreditCard.new(
       :brand              => "visa",
@@ -36,10 +38,10 @@ class BraintreeController < ApplicationController
       :last_name          => "Bates"
     )
 
-    if credit_card.valid?
+    if credit_card.validate.empty?
       response = gateway.purchase(1000, credit_card, :ip => "127.0.0.1")
       if response.success?
-        redirect_to root_path, alert: "PayPal Purchase complete!"
+        redirect_to root_path, alert: "ActiveMerchant Purchase complete!"
       else
         redirect_to root_path, alert: "Error: #{response.message}"
       end
