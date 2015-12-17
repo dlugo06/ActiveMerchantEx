@@ -2,10 +2,14 @@
 // # All this logic will automatically be available in application.js.
 // # You can use CoffeeScript in this file: http://coffeescript.org/
 
-$(function() {
+
+
+function newCard() {
   var card = new Card({
     form: 'form',
     container: '.card',
     debug: true
   });
-});
+}
+
+$(window).load(newCard);
