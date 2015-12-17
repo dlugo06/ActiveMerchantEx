@@ -1,0 +1,17 @@
+
+
+
+<%= link_to 'Back', root_path %>
+
+<div class="card-form">
+  <div class='card'></div>
+  <div class="form-info">
+    <%= form_tag do %>
+      <%= text_field_tag 'number', nil, placeholder: 'Card Number' %>
+      <%= text_field_tag 'name', nil, placeholder: 'Full Name' %>
+      <%= text_field_tag 'expiry', nil, placeholder: 'MM/YY' %>
+      <%= text_field_tag 'cvc', nil, placeholder: 'CVC' %>
+      <%= submit_tag 'Submit' %>
+    <% end %>
+  </div>
+</div>
