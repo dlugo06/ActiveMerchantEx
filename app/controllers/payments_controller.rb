@@ -5,6 +5,7 @@ class PaymentsController < ApplicationController
   end
 
   def active_merchant
+    @purchase = Purchase.new
   end
 
   def purchase
