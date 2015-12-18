@@ -21,7 +21,8 @@ class PaymentsController < ApplicationController
     )
 
     if credit_card.valid?
-      if response = @purchase.active_purchase(credit_card).success?
+      response = @purchase.active_purchase(credit_card)
+      if response.success?
         redirect_to activemerchant_path, alert: "ActiveMerchant Purchase complete! #{response}"
       else
         redirect_to activemerchant_path, alert: "Error: #{response.message}"
