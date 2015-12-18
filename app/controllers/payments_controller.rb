@@ -16,7 +16,7 @@ class PaymentsController < ApplicationController
       number: @purchase.card_number,
       verification_value: @purchase.cvc,
       month: @purchase.expiry,
-      year: @purchase.expiry.split('/').last,
+      year: year_format,
       name: @purchase.full_name
     )
 
@@ -27,12 +27,21 @@ class PaymentsController < ApplicationController
         redirect_to activemerchant_path, alert: "Error: #{@purchase.active_purchase(credit_card).message}"
       end
     else
-      edirect_to activemerchant_path, alert: "Error: #{credit_card.errors.join('. ')}"
+      redirect_to activemerchant_path, alert: "Error: #{credit_card.errors}"
     end
   end
 
   private
   def purchase_params
     params.require(:purchase).permit(:full_name, :card_number, :first_name, :last_name, :expiry, :cvc)
+  end
+
+  def year_format
+    year_input = @purchase.expiry.split('/').last
+    if year_input.strip!.length == 2
+      (year_input.to_i + 2000).to_s
+    else
+      year_input
+    end
   end
 end

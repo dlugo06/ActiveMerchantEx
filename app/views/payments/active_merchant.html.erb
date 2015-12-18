@@ -9,7 +9,7 @@
     <%= form_for :purchase do |f| %>
       <%= f.text_field :card_number, placeholder: 'Card Number' %>
       <%= f.text_field :full_name, placeholder: 'Full Name' %>
-      <%= f.text_field :expiry, placeholder: 'MM/YY' %>
+      <%= f.text_field :expiry, placeholder: 'MM/YYYY' %>
       <%= f.text_field :cvc, placeholder: 'CVC' %>
       <%= f.submit 'Purchase' %>
     <% end %>
