@@ -1,5 +1,6 @@
 class PaymentsController < ApplicationController
   require 'activemerchant'
+  before_action
 
   def landing
   end
@@ -9,6 +10,8 @@ class PaymentsController < ApplicationController
   end
 
   def purchase
+    @purchase = Purchase.new(purchase_params)
+    raise
     ActiveMerchant::Billing::Base.mode = :test
 
     # Paypal Gateway
@@ -40,5 +43,10 @@ class PaymentsController < ApplicationController
     else
       redirect_to activemerchant_path, alert: "Error: credit card is not valid. #{credit_card.errors.full_messages.join('. ')}"
     end
+  end
+
+  private
+  def purchase_params
+    params.require(:purchase).permit(:full_name, :card_number, :first_name, :last_name, :expiry, :cvc)
   end
 end

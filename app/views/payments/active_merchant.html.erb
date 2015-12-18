@@ -7,11 +7,11 @@
   <div class='card'></div>
   <div class="form-info">
     <%= form_for :purchase do |f| %>
-      <%= f.text_field 'number', nil, placeholder: 'Card Number' %>
-      <%= text_field_tag 'name', nil, placeholder: 'Full Name' %>
-      <%= text_field_tag 'expiry', nil, placeholder: 'MM/YY' %>
-      <%= text_field_tag 'cvc', nil, placeholder: 'CVC' %>
-      <%= submit_tag 'Submit' %>
+      <%= f.text_field :card_number, placeholder: 'Card Number' %>
+      <%= f.text_field :full_name, placeholder: 'Full Name' %>
+      <%= f.text_field :expiry, placeholder: 'MM/YY' %>
+      <%= f.text_field :cvc, placeholder: 'CVC' %>
+      <%= f.submit 'Purchase' %>
     <% end %>
   </div>
 </div>
@@ -20,6 +20,12 @@
 var card = new Card({
   form: 'form',
   container: '.card',
+  formSelectors: {
+    numberInput: 'input#purchase_card_number',
+    expiryInput: 'input#purchase_expiry',
+    cvcInput: 'input#purchase_cvc',
+    nameInput: 'input#purchase_full_name'
+},
   debug: true
 });
 </script>
