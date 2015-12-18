@@ -12,10 +12,10 @@ class Purchase < ActiveRecord::Base
     # )
 
     # #Stripe Gateway
-    gateway = ActiveMerchant::Billing::StripeGateway.new(:login => ENV['SECRET_KEY'])
+    gateway = ActiveMerchant::Billing::StripeGateway.new(:login => ENV['STRIPE_SECRET_KEY'])
 
     # gateway = ActiveMerchant::Billing::TrustCommerceGateway.new(:login => 'TestMerchant', :password => 'password')
 
-    response = gateway.purchase(1000, card, :ip => "127.0.0.1")
+    puts gateway.purchase(1000, card, :ip => "127.0.0.1")
   end
 end
