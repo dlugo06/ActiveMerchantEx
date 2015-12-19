@@ -11,10 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151218012620) do
+ActiveRecord::Schema.define(version: 20151219030018) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "agents", force: :cascade do |t|
+    t.string   "email"
+    t.string   "stripe_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "purchases", force: :cascade do |t|
     t.datetime "created_at",  null: false
@@ -27,4 +34,15 @@ ActiveRecord::Schema.define(version: 20151218012620) do
     t.string   "cvc"
   end
 
+  create_table "transactions", force: :cascade do |t|
+    t.integer  "agent_id"
+    t.string   "stripe_transaction_id"
+    t.string   "card_id"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "transactions", ["agent_id"], name: "index_transactions_on_agent_id", using: :btree
+
+  add_foreign_key "transactions", "agents"
 end
