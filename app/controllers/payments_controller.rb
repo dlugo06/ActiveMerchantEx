@@ -10,14 +10,12 @@ class PaymentsController < ApplicationController
   end
 
   def purchase
-    @purchase = Purchase.new(purchase_params)
-
     credit_card = ActiveMerchant::Billing::CreditCard.new(
-      number: @purchase.card_number,
-      verification_value: @purchase.cvc,
-      month: @purchase.expiry,
+      number: params["number"],
+      verification_value: params["cvc"],
+      month: params["expiry"],
       year: year_format,
-      name: @purchase.full_name
+      name: params["name"]
     )
 
     if credit_card.valid?
@@ -38,7 +36,7 @@ class PaymentsController < ApplicationController
   end
 
   def year_format
-    year_input = @purchase.expiry.split('/').last
+    year_input = params["expiry"].split('/').last
     if year_input.strip!.length == 2
       (year_input.to_i + 2000).to_s
     else
