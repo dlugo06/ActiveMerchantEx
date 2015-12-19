@@ -1,7 +1,6 @@
 class Transaction < ActiveRecord::Base
   require 'activemerchant'
   belongs_to :agent
-  # require 'stripe'
 
   def active_purchase(card)
     ActiveMerchant::Billing::Base.mode = :test
@@ -18,21 +17,15 @@ class Transaction < ActiveRecord::Base
 
     # #Test Gateway
     # gateway = ActiveMerchant::Billing::TrustCommerceGateway.new(:login => 'TestMerchant', :password => 'password')
-    # a = Agent.first
-    # customer_id = ''
-    # if a.stripe_id.nil?
-    #   customer_id = create_stripe_customer(a)
-    #   a.update_attributes(stripe_id: customer_id)
-    # else
-    #   customer_id = a.stripe_id
-    # end
+
+    #Extract
     response = gateway.purchase(1000, card, ip: "127.0.0.1" )
-    puts response.params["source"]["id"]
+
+    #Transform
+    card_id = response.params["source"]["id"]
+    stripe_transaction_id = response.params["id"]
+
+    #Load
+    {response: response, card_id: card_id, stripe_transaction_id: stripe_transaction_id}
   end
-
-  # def create_stripe_customer(agent)
-  #   customer = Stripe::Customer.create(email: agent.email)
-  #   customer.id
-  # end
-
 end

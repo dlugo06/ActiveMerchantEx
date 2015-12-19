@@ -1,6 +1,5 @@
 class PaymentsController < ApplicationController
   require 'activemerchant'
-  before_action
 
   def landing
   end
@@ -10,6 +9,8 @@ class PaymentsController < ApplicationController
   end
 
   def purchase
+    @transaction = Transaction.new(agent_id: set_agent.id)
+
     credit_card = ActiveMerchant::Billing::CreditCard.new(
       number: params["number"],
       verification_value: params["cvc"],
@@ -19,8 +20,9 @@ class PaymentsController < ApplicationController
     )
 
     if credit_card.valid?
-      response = @transaction.active_purchase(credit_card)
-      if response.success?
+      transaction = @transaction.active_purchase(credit_card)
+      if transaction[:response].success?
+        @transaction.update_attributes(card_id: transaction[:card_id], stripe_transaction_id: transaction[:stripe_transaction_id])
         redirect_to activemerchant_path, alert: "ActiveMerchant transaction complete!"
       else
         redirect_to activemerchant_path, alert: "Error: #{response.message}"
@@ -31,6 +33,9 @@ class PaymentsController < ApplicationController
   end
 
   private
+  def set_agent
+    Agent.find(1)
+  end
 
   def year_format
     year_input = params["expiry"].split('/').last
