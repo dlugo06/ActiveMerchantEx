@@ -19,9 +19,9 @@ class PaymentsController < ApplicationController
     )
 
     if credit_card.valid?
-      response = @purchase.active_purchase(credit_card)
+      response = @transaction.active_purchase(credit_card)
       if response.success?
-        redirect_to activemerchant_path, alert: "ActiveMerchant Purchase complete! #{response}"
+        redirect_to activemerchant_path, alert: "ActiveMerchant transaction complete!"
       else
         redirect_to activemerchant_path, alert: "Error: #{response.message}"
       end
@@ -31,9 +31,6 @@ class PaymentsController < ApplicationController
   end
 
   private
-  def purchase_params
-    params.require(:purchase).permit(:full_name, :card_number, :first_name, :last_name, :expiry, :cvc)
-  end
 
   def year_format
     year_input = params["expiry"].split('/').last
